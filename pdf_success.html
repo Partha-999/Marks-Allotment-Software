@@ -1,0 +1,180 @@
+{% load base64_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Download and Email Successful</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-start: #8B5CF6;
+            --gradient-end: #4F46E5;
+            --success-color: #10B981;
+            --button-primary: #4F46E5;
+            --button-secondary: #E5E7EB;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 1rem;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 42rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .gradient-top, .gradient-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 0.25rem;
+        }
+
+        .gradient-top {
+            top: 0;
+            background: linear-gradient(to right, #10B981, #3B82F6);
+        }
+
+        .gradient-bottom {
+            bottom: 0;
+            background: linear-gradient(to right, #3B82F6, #8B5CF6);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .success-icon {
+            width: 4rem;
+            height: 4rem;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }
+
+        .success-icon svg {
+            width: 2rem;
+            height: 2rem;
+            fill: white;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--button-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338CA;
+        }
+
+        .btn-secondary {
+            background-color: var(--button-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #D1D5DB;
+        }
+
+        .btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .content {
+                padding: 3rem;
+            }
+
+            .button-container {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gradient-top"></div>
+        <div class="content">
+            <div class="success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <h2>PDF Download and Email Successful</h2>
+            <p>Your PDF has been generated and the email has been sent successfully. You can download the PDF using the button below.</p>
+            <div class="button-container">
+                <a href="data:application/pdf;base64,{{ pdf_data|b64encode }}" download="student_marks_report.pdf" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                    </svg>
+                    Download PDF
+                </a>
+                <a href="{% url 'role_selection' %}" class="btn btn-secondary">
+                    Back to Role Selection
+                </a>
+            </div>
+        </div>
+        <div class="gradient-bottom"></div>
+    </div>
+</body>
+</html>
